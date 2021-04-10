@@ -15,13 +15,38 @@
     <title>Равномерное распределение</title>
   </head>
   <body>
-    <div class="charts">
-      <form class="form position-absolute">
-        <div class="inputs">
-          <div class="mb-3">
-            <label for="nX" class="form-label"
-              >Количество случайных чисел</label
-            >
+    <div class="container">
+      <ul class="nav nav-pills mb-3 p-2">
+        <li class="nav-item">
+          <a class="nav-link active" href="#">Равномерное</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Треугольное</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Трапецеидальное</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Нормальное</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Экспоненциальное</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Гиперэкспоненциальное</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Эрланговское</a>
+        </li>
+      </ul>
+    </div>
+    <div class="container">
+      <form class="p-2">
+        <div class="row mb-3">
+          <label for="nX" class="col-sm-3 col-form-label"
+            >Количество случайных чисел</label
+          >
+          <div class="col-sm-9">
             <input
               class="form-control"
               type="number"
@@ -32,8 +57,12 @@
               id="nX"
             />
           </div>
-          <div class="">
-            <label for="nBin" class="form-label">Количество диапазонов</label>
+        </div>
+        <div class="row mb-3">
+          <label for="nBin" class="col-sm-3 col-form-label"
+            >Количество диапазонов</label
+          >
+          <div class="col-sm-9">
             <input
               class="form-control"
               type="number"
@@ -45,8 +74,19 @@
             />
           </div>
         </div>
+      </form>
+    </div>
+    <div class="container">
+      <div class="charts">
+        <div id="chart_1"></div>
+        <div id="chart_2"></div>
+        <div id="chart_3"></div>
+      </div>
+    </div>
+    <div class="container">
+      <form class="p-2">
         <div
-          class="checkboxes d-flex justify-content-between align-items-center mb-3"
+          class="checkboxes d-flex justify-content-between align-items-center mb-3 flex-wrap"
         >
           <div class="form-check">
             <input
@@ -81,19 +121,11 @@
               id="blue"
             />
             <label class="form-check-label" for="blue">
-              Метода линейной конгруэнтной последовательности Д. Г. Лемера
+              Метод линейной конгруэнтной последовательности Д. Г. Лемера
             </label>
           </div>
         </div>
-        <div class="links d-flex justify-content-between align-items-center">
-          <a href="triangle.html">Треугольное распределение</a>
-          <a href="normal.html">Нормальное распределение</a>
-          <a href="exponential.html">Экспоненциальное распределение</a>
-        </div>
       </form>
-      <div id="chart_1"></div>
-      <div id="chart_2"></div>
-      <div id="chart_3"></div>
     </div>
     <script src="uniform.js"></script>
   </body>

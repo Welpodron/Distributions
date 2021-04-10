@@ -1,8 +1,5 @@
 .charts {
-  display: flex;
   position: relative;
-  width: 100%;
-  height: 100vh;
 }
 
 .form {
@@ -23,38 +20,38 @@ body {
   column-gap: 100px;
 }
 
-#chart_1 {
-  position: absolute;
-  top: calc(20% + 50px);
-  left: 50%;
-  transform: translate(-50%, 0);
-}
-
 #chart_2 {
   position: absolute;
-  top: calc(20% + 50px);
+  top: 0;
   left: 50%;
+  width: 100%;
+  height: 100%;
   transform: translate(-50%, 0);
 }
 
 #chart_3 {
   position: absolute;
-  top: calc(20% + 50px);
+  top: 0;
   left: 50%;
+  width: 100%;
+  height: 100%;
   transform: translate(-50%, 0);
 }
 
 .domain {
-  stroke: #000;
-  opacity: 0.05;
+  stroke: rgb(75, 75, 75);
+  opacity: 0;
 }
 
 .tick line {
-  stroke: #000;
-  opacity: 0.05;
+  stroke: rgb(75, 75, 75);
+  stroke-width: 0.5px;
+  opacity: 0.06;
 }
 
 .tick text {
   fill: #000;
-  opacity: 0.5;
+  font-size: 0.4rem;
+  opacity: 0.3;
+  font-family: inherit;
 }
