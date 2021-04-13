@@ -15,70 +15,106 @@
     <title>Нормальное распределение</title>
   </head>
   <body>
-    <div class="charts">
-      <form class="form position-absolute">
-        <div class="inputs">
-          <div class="mb-3">
-            <label for="nX" class="form-label"
+    <div class="container bg-white rounded shadow-sm p-4">
+      <div class="container">
+        <ul class="nav nav-pills mb-3 p-2">
+          <li class="nav-item">
+            <a class="nav-link" href="index.html">Равномерное</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="triangle.html">Треугольное</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="trapezoidal.html">Трапецеидальное</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link active">Нормальное</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="exponential.html">Экспоненциальное</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="hyperexponential.html"
+              >Гиперэкспоненциальное</a
+            >
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="erlang.html">Эрланговское</a>
+          </li>
+        </ul>
+      </div>
+      <div class="container">
+        <form class="p-2">
+          <div class="row mb-3">
+            <label for="nX" class="col-sm-3 col-form-label"
               >Количество случайных чисел</label
             >
-            <input
-              class="form-control"
-              type="number"
-              min="1000"
-              max="10000000"
-              step="1000"
-              value="1000"
-              id="nX"
-            />
+            <div class="col-sm-9">
+              <input
+                class="form-control"
+                type="number"
+                min="1000"
+                max="10000000"
+                step="1000"
+                value="1000"
+                id="nX"
+              />
+            </div>
           </div>
-          <div class="">
-            <label for="nBin" class="form-label">Количество диапазонов</label>
-            <input
-              class="form-control"
-              type="number"
-              min="10"
-              max="1000"
-              step="20"
-              value="10"
-              id="nBin"
-            />
+          <div class="row mb-3">
+            <label for="nBin" class="col-sm-3 col-form-label"
+              >Количество диапазонов</label
+            >
+            <div class="col-sm-9">
+              <input
+                class="form-control"
+                type="number"
+                min="10"
+                max="1000"
+                step="20"
+                value="10"
+                id="nBin"
+              />
+            </div>
           </div>
+        </form>
+      </div>
+      <div class="container">
+        <div class="charts">
+          <div id="chart_1"></div>
+          <div id="chart_2"></div>
         </div>
-        <div
-          class="checkboxes d-flex justify-content-between align-items-center mb-3"
-        >
-          <div class="form-check">
-            <input
-              data-for="#chart_1"
-              class="form-check-input"
-              type="checkbox"
-              checked
-              id="red"
-            />
-            <label class="form-check-label" for="red">
-              Метод суммы равномерно распределенных случайных величин
-              (методичка)
-            </label>
+      </div>
+      <div class="container">
+        <form class="p-2">
+          <div
+            class="checkboxes d-flex justify-content-between align-items-center mb-3 flex-wrap"
+          >
+            <div class="form-check">
+              <input
+                data-for="#chart_1"
+                class="form-check-input"
+                type="checkbox"
+                checked
+                id="red"
+              />
+              <label class="form-check-label" for="red">
+                Сумма равномерно распределенных случайных величин
+              </label>
+            </div>
+            <div class="form-check">
+              <input
+                data-for="#chart_2"
+                class="form-check-input"
+                type="checkbox"
+                checked
+                id="green"
+              />
+              <label class="form-check-label" for="green"> Метод Бокса </label>
+            </div>
           </div>
-          <div class="form-check">
-            <input
-              data-for="#chart_2"
-              class="form-check-input"
-              type="checkbox"
-              checked
-              id="green"
-            />
-            <label class="form-check-label" for="green"> Метод Бокса </label>
-          </div>
-        </div>
-        <div class="links d-flex justify-content-between align-items-center">
-          <a href="index.html">Равномерное распределение</a>
-          <a href="triangle.html">Треугольное распределение</a>
-        </div>
-      </form>
-      <div id="chart_1"></div>
-      <div id="chart_2"></div>
+        </form>
+      </div>
     </div>
     <script src="normal.js"></script>
   </body>

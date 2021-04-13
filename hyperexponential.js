@@ -1,6 +1,8 @@
 const amount = document.querySelector("#nX");
 const bins = document.querySelector("#nBin");
-const lambda = document.querySelector("#lambda");
+const lambda1 = document.querySelector("#lambda1");
+const lambda2 = document.querySelector("#lambda2");
+const q = document.querySelector("#q");
 
 var lcg = {
   seed: Date.now(),
@@ -19,7 +21,7 @@ var lcg = {
 };
 
 function exp_pdf(x, lambda) {
-  return lambda <= 0 ? 0 : (-1 / lambda) * Math.log(x);
+  if (x !== 0) return lambda <= 0 ? 0 : (-1 / lambda) * Math.log(x);
 }
 
 // set the dimensions and margins of the graph
@@ -43,14 +45,6 @@ var svg2 = d3
   .append("g")
   .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-var svg3 = d3
-  .select("#chart_3")
-  .append("svg")
-  .attr("viewBox", `0 0 700 350`)
-  .attr("preserveAspectRatio", "xMidYMid meet")
-  .append("g")
-  .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
-
 var x = d3.scaleLinear().domain([0, 8]);
 var xAxis = d3.axisBottom(x);
 var xAxisGroup = svg.append("g");
@@ -58,16 +52,28 @@ var xAxisGroup = svg.append("g");
 var y = d3.scaleLinear().range([height, 0]);
 var yAxis = svg.append("g");
 
-function update(elements, intervals, lambda) {
+function update(elements, intervals, lambda1, lambda2, q) {
   let data1 = Array(parseInt(elements))
     .fill()
-    .map((_) => exp_pdf(lcg.nextFloat(), lambda - 1));
+    .map((_) => {
+      if (q > 1 - q) {
+        return Math.random() < q
+          ? exp_pdf(lcg.nextFloat(), lambda1)
+          : exp_pdf(lcg.nextFloat(), lambda2);
+      } else if (1 - q > q) {
+        return Math.random() < 1 - q
+          ? exp_pdf(lcg.nextFloat(), lambda2)
+          : exp_pdf(lcg.nextFloat(), lambda1);
+      } else {
+        return Math.random() < 0.5
+          ? exp_pdf(lcg.nextFloat(), lambda1)
+          : exp_pdf(lcg.nextFloat(), lambda2);
+      }
+    });
+
   let data2 = Array(parseInt(elements))
     .fill()
-    .map((_) => exp_pdf(lcg.nextFloat(), lambda));
-  let data3 = Array(parseInt(elements))
-    .fill()
-    .map((_) => exp_pdf(lcg.nextFloat(), lambda + 1));
+    .map((_) => exp_pdf(lcg.nextFloat(), lambda1));
 
   const histogram = d3
     .histogram()
@@ -77,17 +83,16 @@ function update(elements, intervals, lambda) {
 
   const bins1 = histogram(data1);
   const bins2 = histogram(data2);
-  const bins3 = histogram(data3);
 
   y.domain([
     0,
-    d3.max(bins3, function (d) {
+    d3.max(bins1, function (d) {
       return d.length;
     }),
   ]);
   yAxis.transition().duration(500).call(d3.axisLeft(y).tickSize(-width));
 
-  x.domain([0, Math.ceil(Math.max.apply(null, data3)) + 2]).range([0, width]);
+  x.domain([0, Math.ceil(Math.max.apply(null, data1)) + 2]).range([0, width]);
 
   xAxisGroup
     .attr("transform", "translate(0," + height + ")")
@@ -141,38 +146,23 @@ function update(elements, intervals, lambda) {
     .style("opacity", 0.9);
 
   svg2.selectAll("rect").data(bins2).exit().remove();
-
-  svg3
-    .selectAll("rect")
-    .data(bins3)
-    .enter()
-    .append("rect") // Add a new rect for each new elements
-    .merge(svg3.selectAll("rect").data(bins3)) // get the already existing elements as well
-    .transition() // and apply changes to all of them
-    .duration(500)
-    .attr("x", 1)
-    .attr("transform", function (d) {
-      return "translate(" + x(d.x0) + "," + y(d.length) + ")";
-    })
-    .attr("width", function (d) {
-      return x(d.x1) - x(d.x0);
-    })
-    .attr("height", function (d) {
-      return height - y(d.length);
-    })
-    .style("fill", "#2980b9")
-    .style("opacity", 0.8);
-
-  svg3.selectAll("rect").data(bins3).exit().remove();
 }
 
-update(parseInt(amount.value), parseInt(bins.value), parseFloat(lambda.value));
+update(
+  parseInt(amount.value),
+  parseInt(bins.value),
+  parseFloat(lambda1.value),
+  parseFloat(lambda2.value),
+  parseFloat(q.value)
+);
 
 d3.select("#nBin").on("input", function () {
   update(
     parseInt(amount.value),
     parseInt(bins.value),
-    parseFloat(lambda.value)
+    parseFloat(lambda1.value),
+    parseFloat(lambda2.value),
+    parseFloat(q.value)
   );
 });
 
@@ -180,15 +170,39 @@ d3.select("#nX").on("input", function () {
   update(
     parseInt(amount.value),
     parseInt(bins.value),
-    parseFloat(lambda.value)
+    parseFloat(lambda1.value),
+    parseFloat(lambda2.value),
+    parseFloat(q.value)
   );
 });
 
-d3.select("#lambda").on("input", function () {
+d3.select("#lambda1").on("input", function () {
   update(
     parseInt(amount.value),
     parseInt(bins.value),
-    parseFloat(lambda.value)
+    parseFloat(lambda1.value),
+    parseFloat(lambda2.value),
+    parseFloat(q.value)
+  );
+});
+
+d3.select("#lambda2").on("input", function () {
+  update(
+    parseInt(amount.value),
+    parseInt(bins.value),
+    parseFloat(lambda1.value),
+    parseFloat(lambda2.value),
+    parseFloat(q.value)
+  );
+});
+
+d3.select("#q").on("input", function () {
+  update(
+    parseInt(amount.value),
+    parseInt(bins.value),
+    parseFloat(lambda1.value),
+    parseFloat(lambda2.value),
+    parseFloat(q.value)
   );
 });
 
